@@ -99,3 +99,67 @@ function detonatorTimer2(delay) {
   console.log(delay);
   setTimeout(detonatorTimer2, 1000, --delay);
 }
+
+// 5. Напишіть об'єкт в якому опишіть свої довільні властивості та довільні методи (2-3 штуки) що ці властивості виводять.
+// 6. Зробіть всі свої методи з задачі 5 прив'язаними до контексту свого об'єкту - аби вони були захищені від перезапису об'єкту і їх можна було викликати в таймері:
+let user = {
+  name: "Jane",
+  surname: "Holovan",
+  adress: {
+    city: "Kharkiv",
+    street: "Molochna",
+    bornCity: "Energodar",
+  },
+  gender: "female",
+  age: 32,
+  hobby: "cycling",
+  "favorite movies": {
+    movie1: "Shindler's list",
+    movie2: "The wizarrd of Oz",
+    movie3: "Star War",
+  },
+  hobbies() {
+    console.log(
+      `I'm a ${this.hobby} woman who got from ${this.adress.city} to ${this.adress.bornCity} by bike`
+    );
+  },
+  movies() {
+    console.log(
+      `At my ${this.age} I have three favorite movies ${this["favorite movies"].movie1}, ${this["favorite movies"].movie2} and ${this["favorite movies"].movie3}`
+    );
+  },
+};
+
+let securedSelfHobbies = user.hobbies.bind(user);
+let securedSelfMovies = user.movies.bind(user);
+
+setTimeout(securedSelfHobbies, 4000); // виведе коректний результат*
+setTimeout(securedSelfMovies, 5000); // виведе коректний результат*
+
+//7. Напишіть функцію-декоратор яка вповільнює виконання довільної функції на вказану кількість секунд.
+
+// тут напишіть довільну функцію яка робить якусь роботу зі своїми аргументами та виводить результат в консоль
+function someFunction(numOne, numTwo) {
+  if (numTwo === 1) {
+    console.log(numOne);
+  } else {
+    console.log(numOne * numTwo);
+  }
+}
+
+function slower(func, seconds) {
+  return function (...args) {
+    console.log(`Chill out, you will get your result in ${seconds} seconds`);
+    setTimeout(() => {
+      const result = func(...args);
+      console.log(result);
+    }, seconds * 1000);
+  };
+}
+// тут ваш код для декоратора*
+let slowedSomeFunction = slower(someFunction, 5); // обгортаєте свою довільну функцію 'someFunction' в декоратор*
+
+slowedSomeFunction(2, 3); // викликаєте декоратор*
+
+// виведе в консоль "Chill out, you will get you result in 5 seconds"
+//...через 5 секунд виведе результат роботи 'someFunction*'
