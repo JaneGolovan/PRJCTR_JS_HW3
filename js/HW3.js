@@ -74,7 +74,7 @@ function byProperty(property, direction) {
 // Використовуючи setInterval
 
 detonatorTimer1(3);
-detonatorTimer2(3);
+// detonatorTimer2(3);
 //3
 //2
 //1
@@ -82,11 +82,12 @@ detonatorTimer2(3);
 function detonatorTimer1(delay) {
   let count = delay;
   const counter = setInterval(function () {
-    console.log(count + `!`);
-    count--;
     if (count <= 0) {
       clearInterval(counter);
       console.log("BOOM!");
+    } else {
+      console.log(count + `!`);
+      count--;
     }
   }, 1000);
 }
